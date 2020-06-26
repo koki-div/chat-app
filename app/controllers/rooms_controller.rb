@@ -9,12 +9,18 @@ class RoomsController < ApplicationController
 
   def create
     @room = Room.new(room_params)
-    binding.pry
     if @room.save
       redirect_to root_path
     else
       render :new
     end
+  end
+
+  def destroy
+    room = Room.find(params[:id])
+    room.messages.delete_all
+    room.delete
+    redirect_to root_path
   end
 
   private
